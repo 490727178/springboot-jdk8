@@ -1,0 +1,2 @@
+#org.springframework.boot.env.PropertySourceLoader=com.example.springbootlogback.ConfigFileLocationPrinter
+org.springframework.context.ApplicationListener=com.example.springbootlogback.ConfigPathPrinter
