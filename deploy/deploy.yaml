@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-jdk8
+  namespace: test
+spec:
+  # 指定Pod的副本数
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-jdk8
+  template:
+    metadata:
+      labels:
+        app: test-jdk8
+    spec:
+      imagePullSecrets:
+        - name: harbor
+      containers:
+          # 指定容器使用的镜像
+         - image: $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-${BUILD_NUMBER}
+           ports:
+            # 容器端口
+            - containerPort: 8080
+           name: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-jdk8-service
+  namespace: test
+  labels:
+    app: test-jdk8
+spec:
+  ports:
+    - port: 8080
+      name: http
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: test-jdk8
+  sessionAffinity: None
+  type: NodePort
+
