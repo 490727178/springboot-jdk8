@@ -14,7 +14,6 @@ pipeline {
         script {
             BRANCH_TAG = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
             env.BRANCH_TAG = BRANCH_TAG
-            echo "env.BRANCH_TAG: ${env.BRANCH_TAG} ,BRANCH_TAG: $BRANCH_TAG"
         }
       }
     }
@@ -80,7 +79,6 @@ pipeline {
           DOCKERHUB_NAMESPACE = 'myproject'
           GITHUB_ACCOUNT = 'kubesphere'
           APP_NAME = 'test-jdk8'
-          BRANCH_TAG = "laster"
       }
       parameters {
           string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Git branch to build')
