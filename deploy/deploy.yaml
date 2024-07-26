@@ -18,7 +18,7 @@ spec:
         - name: harbor
       containers:
           # 指定容器使用的镜像
-         - image: $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:${env.COMMIT_ID}
+         - image: $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:${env.branch_tag}
            ports:
             # 容器端口
             - containerPort: 8080
