@@ -49,10 +49,18 @@ pipeline {
     }
 
     stage('部署项目') {
-      agent none
-      steps {
-        kubernetesDeploy(configs: 'deploy/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
-      }
+       steps {
+      //             input(id: 'deploy-to-dev', message: 'deploy to dev?')
+          container ('maven') {
+              withCredentials([
+                  kubeconfigFile(
+                  credentialsId: "$KUBECONFIG_CREDENTIAL_ID",
+                  variable: 'KUBECONFIG')
+                  ]) {
+                  sh 'envsubst < deploy/*.yaml | kubectl apply -f -'
+              }
+          }
+        }
     }
 
     stage('deploy to production') {
@@ -71,7 +79,7 @@ pipeline {
           DOCKERHUB_NAMESPACE = 'myproject'
           GITHUB_ACCOUNT = 'kubesphere'
           APP_NAME = 'test-jdk8'
-          BRANCH_TAG = ''
+          BRANCH_TAG = "laster"
       }
       parameters {
           string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Git branch to build')
