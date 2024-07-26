@@ -13,7 +13,8 @@ pipeline {
         git(url: 'https://gitee.com/zengrenshang/springboot-jdk8.git',  branch: "${params.BRANCH_NAME}")
         script {
             BRANCH_TAG = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-            echo "BRANCH_TAG: $BRANCH_TAG"
+            env.BRANCH_TAG = BRANCH_TAG
+            echo "env.BRANCH_TAG: ${env.BRANCH_TAG} ,BRANCH_TAG: $BRANCH_TAG"
         }
       }
     }
