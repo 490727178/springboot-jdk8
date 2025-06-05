@@ -22,4 +22,11 @@ public class SpringbootLogbackApplication {
         return "Hello, this is the specified string.";
     }
 
+
+
+    @GetMapping("not-available")
+    public String generateString1() {
+        return "Hello, this is the specified string.";
+    }
+
 }
